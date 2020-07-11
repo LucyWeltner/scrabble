@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 class Game(models.Model):
 	totalScore = models.IntegerField()
-	# players = models.ManyToManyField(Player, through="PlayerInGame")
+	players = models.ManyToManyField("Player", through="PlayerInGame")
 	name = models.TextField(help_text="Enter a name for this game")
 
 	def __str__(self):
