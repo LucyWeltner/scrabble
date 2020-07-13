@@ -1,3 +1,7 @@
 from django.shortcuts import render
+from django.http import HttpResponse
+import datetime
 
-# Create your views here.
+def game_view(request):
+	today = datetime.datetime.now().date()
+	return render(request, 'games/index.html', {"today": today})
