@@ -9,10 +9,10 @@ def game_view(request):
 
 def new_game_view(request):
 	players = Player.objects.all()
-	playersobj = {}
-	for num, player in enumerate(players, start=1):
-		playersobj[num] = player
-	print(playersobj)
-	return render(request, 'games/new.html', {players: playersobj.values()})
+	playersArray = []
+	for player in players:
+		playersArray.append(player)
+	print(playersArray)
+	return render(request, 'games/new.html', {"players": playersArray})
 
 # def create_game(request):

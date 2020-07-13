@@ -1,15 +1,11 @@
 <html>
 	<body>
 		<h1><i>Create a New Game!</i></h1>
-		<ul>
-			{% for player in players %}
-				<li>{{player.name}}</li>
-			{% endfor %}
-		</ul>
 		<form method="POST" action="/games">
 			{% csrf_token %}
 			<label for="name">Name of Game:</label>
 			<input type="text" id="name" name="name"/>
+			<p></p>
 			{% for player in players %}
 				<input type="radio" value="{{player.id}}" id="player {{forloop.counter}}">
 				<label for="player {{forloop.counter}}">{{player.name}}</label>
