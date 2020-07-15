@@ -5,6 +5,11 @@
 		<ul>
 			{%for game in games%}
 				<li>{{game.name}}</li>
+				<ul>
+					{%for player in game.players.all%}
+						<li>{{player.name}}</li>
+					{%endfor%}
+				</ul>
 			{% endfor %}
 		</ul>
 		<form method="GET" action="/games/new">
