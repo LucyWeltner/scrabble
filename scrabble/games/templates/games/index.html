@@ -2,9 +2,15 @@
 	<body>
 		<h1><i>Welcome to Scrabble!</i></h1>
 		<p>Today is {{today}}</p>
+		<h2>Current Games</h2>
 		<ul>
 			{%for game in games%}
-				<li>{{game.name}}</li>
+				<li>{{game.name}}
+					<br/>
+					{%if game.players.all.count > 0%}
+						Players:
+					{%endif%}
+				</li>
 				<ul>
 					{%for player in game.players.all%}
 						<li>{{player.name}}</li>
