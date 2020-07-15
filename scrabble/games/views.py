@@ -5,7 +5,15 @@ import datetime
 
 def game_view(request):
 	today = datetime.datetime.now().date()
-	return render(request, 'games/index.html', {"today": today})
+	games = Game.objects.all().order_by('name')
+	if request.method == 'POST':
+		form = GameForm(request.POST)
+		if form.is_valid():
+			name = form.cleaned_data.get("name")
+			player1 = form.cleaned_data.get("players")
+			newgame = Game.objects.create(name=name)
+			newgame.players.add(player1[0])
+	return render(request, 'games/index.html', {"today": today, "games": games})
 
 def new_game_view(request):
 	form = GameForm()

@@ -2,6 +2,11 @@
 	<body>
 		<h1><i>Welcome to Scrabble!</i></h1>
 		<p>Today is {{today}}</p>
+		<ul>
+			{%for game in games%}
+				<li>{{game.name}}</li>
+			{% endfor %}
+		</ul>
 		<form method="GET" action="/games/new">
 			<button type="submit">Create New Game</button>
 		</form>
