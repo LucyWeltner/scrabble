@@ -25,8 +25,22 @@ def new_game_view(request):
 	# print(playersArray)
 	# return render(request, 'games/new.html', {"players": playersArray})
 
-# def games_view(request):
+def new_player_view(request):
+	form = PlayerForm()
+	return render(request, 'players/new.html', {"form": form})
 
+def players_view(request):
+	if request.method == "POST":
+		data = PlayerForm(request.POST)
+		if data.is_valid():
+			name = data.cleaned_data.get("name")
+			email = data.cleaned_data.get("email")
+			password = data.cleaned_data.get("password")
+			Player.objects.create(name=name, email=email, password=password)
+			return render("<p>Player Successfully Created</p>")
+		# return HttpResponseRedirect('/profile/')
+	else:
+		return render("<p>There was an error, please try again</p>")
 
 # def create_game(request):
 	# newgame = (user1 = params[])

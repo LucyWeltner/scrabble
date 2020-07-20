@@ -1,5 +1,5 @@
 from django.db import models
-from django.forms import ModelForm
+from django.forms import ModelForm, CharField, PasswordInput
 
 # Create your models here.
 class Game(models.Model):
@@ -11,8 +11,8 @@ class Game(models.Model):
 		return self.name
 
 class Player(models.Model):
-	name = models.TextField(help_text= "Enter Your Username: ")
-	email = models.EmailField(help_text= "Enter Your Email: ")
+	name = models.CharField(max_length=200)
+	email = models.EmailField()
 	password = models.CharField(max_length = 200)
 	games = models.ManyToManyField(Game, through="PlayerInGame")
 
@@ -30,6 +30,7 @@ class GameForm(ModelForm):
 		fields = ['name', 'players']
 
 class PlayerForm(ModelForm):
+	password = CharField(widget=PasswordInput)
 	class Meta:
 		model = Player
 		fields = ['name', 'email', 'password']

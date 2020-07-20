@@ -1,7 +1,9 @@
 <html>
-	<form method="POST" action="/profile">
+	<form method="POST" action="/players/">
 		{% csrf_token %}
-		{{form}}
+		<p>{{form.name.label}}: {{form.name}}</p>
+		<p>{{form.email.label}}: {{form.email}}</p>
+		<p>{{form.password.label}}: {{form.password}}</p>
 		<p></p>
 		<input type="submit" value="Sign Up"/>
 	</form>
