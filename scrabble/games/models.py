@@ -13,6 +13,7 @@ class Game(models.Model):
 class Player(models.Model):
 	name = models.TextField(help_text= "Enter Your Username: ")
 	email = models.EmailField(help_text= "Enter Your Email: ")
+	password = models.CharField(max_length = 200)
 	games = models.ManyToManyField(Game, through="PlayerInGame")
 
 	def __str__(self):
@@ -31,4 +32,4 @@ class GameForm(ModelForm):
 class PlayerForm(ModelForm):
 	class Meta:
 		model = Player
-		fields = ['name', 'email']
+		fields = ['name', 'email', 'password']

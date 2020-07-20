@@ -1,0 +1,8 @@
+<html>
+	<form method="POST" action="/profile">
+		{% csrf_token %}
+		{{form}}
+		<p></p>
+		<input type="submit" value="Sign Up"/>
+	</form>
+</html>
