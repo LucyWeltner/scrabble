@@ -1,5 +1,6 @@
 from django.db import models
 from django.forms import ModelForm, CharField, PasswordInput
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Game(models.Model):
@@ -11,9 +12,10 @@ class Game(models.Model):
 		return self.name
 
 class Player(models.Model):
-	name = models.CharField(max_length=200)
-	email = models.EmailField()
-	password = models.CharField(max_length = 200)
+	user = models.OneToOneField(User, on_delete=models.CASCADE)
+	# name = models.CharField(max_length=200)
+	# email = models.EmailField()
+	# password = models.CharField(max_length = 200)
 	games = models.ManyToManyField(Game, through="PlayerInGame")
 
 	def __str__(self):
@@ -29,8 +31,8 @@ class GameForm(ModelForm):
 		model = Game
 		fields = ['name', 'players']
 
-class PlayerForm(ModelForm):
+class UserForm(ModelForm):
 	password = CharField(widget=PasswordInput)
 	class Meta:
-		model = Player
-		fields = ['name', 'email', 'password']
+		model = User
+		fields = ['username', 'email', 'password']

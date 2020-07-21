@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Player, Game, PlayerInGame, GameForm, PlayerForm
+from .models import Player, Game, PlayerInGame, GameForm, UserForm
+from django.contrib.auth.models import User
 import datetime
 
 def game_view(request):
@@ -26,22 +27,38 @@ def new_game_view(request):
 	# return render(request, 'games/new.html', {"players": playersArray})
 
 def new_player_view(request):
-	form = PlayerForm()
+	form = UserForm()
 	return render(request, 'players/new.html', {"form": form})
 
 def players_view(request):
 	if request.method == "POST":
-		data = PlayerForm(request.POST)
+		data = UserForm(request.POST)
 		if data.is_valid():
-			name = data.cleaned_data.get("name")
+			name = data.cleaned_data.get("username")
 			email = data.cleaned_data.get("email")
 			password = data.cleaned_data.get("password")
-			Player.objects.create(name=name, email=email, password=password)
-			return render("<p>Player Successfully Created</p>")
+			user = User.objects.create_user(name, email, password)
+			player = Player.objects.create(user_id=user.id)
+			return HttpResponse("<p>Player Successfully Created</p>")
 		# return HttpResponseRedirect('/profile/')
 	else:
-		return render("<p>There was an error, please try again</p>")
+		return HttpResponse("<p>There was an error, please try again</p>")
+
+# def login(request):
+# 	form = 
+
+# def profile(request):
+
 
 # def create_game(request):
 	# newgame = (user1 = params[])
 	#  = playerInGame(score=0, game=newgame, user=)
+
+
+
+
+# meeting with Ben Kat - last step - tomorrow at 2 pm 
+# Maybe technical questions 
+# Steep learning curve 
+# Trial contract with end date (6 months)
+# values: ownership, inquisitiveness, ideas/innovation, someone who can grow with the business
