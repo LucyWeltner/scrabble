@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from .models import Player, Game, PlayerInGame, GameForm, UserForm, LoginForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from django.contrib.auth.forms import AuthenticationForm
 import datetime
 
 def game_view(request):
@@ -47,16 +48,22 @@ def players_view(request):
 
 def login_view(request):
 	if request.method == "POST":
-		form =  authenticate.forms.AuthenticationForm()
+		form =  AuthenticationForm(data=request.POST)
 		if form.is_valid():
 			username = form.cleaned_data.get("username")
 			password = form.cleaned_data.get("password")
-			return HttpResponseRedirect('/profile/')
+			print(username)
+			user = authenticate(username=username, password=password)
+			if user is not None:
+				return HttpResponse("<p>Login successful</p>")
+			else:
+				return HttpResponse("<p>Username or password was incorrect, please try again</p>")
 		else: 
-			return HttpResponse("<p>There was an error, please try again</p>")
+			print(form.cleaned_data.get("username"))
+			return HttpResponse("<p>There was an error, please try again:</p>")
 	else:
-		form = authenticate.forms.AuthenticationForm()
-	render(request, 'players/login.html', {"form": form})
+		form = AuthenticationForm()
+	return render(request, 'players/login.html', {"form": form})
 
 
 
