@@ -1,7 +1,8 @@
 <html>
 	<form method = "POST" action = "/login/">
 		{% csrf_token %}
-		{{form}}
+		<p>{{form.username.label}}: {{form.username}}</p>
+		<p>{{form.password.label}}: {{form.password}}</p>
 		<input type="submit" value="Login"/>
 	</form>
 </html>
