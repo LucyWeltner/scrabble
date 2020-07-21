@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Player, Game, PlayerInGame, GameForm, UserForm
+from .models import Player, Game, PlayerInGame, GameForm, UserForm, LoginForm
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 import datetime
 
 def game_view(request):
@@ -41,11 +42,24 @@ def players_view(request):
 			player = Player.objects.create(user_id=user.id)
 			return HttpResponse("<p>Player Successfully Created</p>")
 		# return HttpResponseRedirect('/profile/')
-	else:
-		return HttpResponse("<p>There was an error, please try again</p>")
+		else:
+			return HttpResponse("<p>There was an error, please try again</p>")
 
-# def login(request):
-# 	form = 
+def login_view(request):
+	if request.method == "POST":
+		form =  authenticate.forms.AuthenticationForm()
+		if form.is_valid():
+			username = form.cleaned_data.get("username")
+			password = form.cleaned_data.get("password")
+			return HttpResponseRedirect('/profile/')
+		else: 
+			return HttpResponse("<p>There was an error, please try again</p>")
+	else:
+		form = authenticate.forms.AuthenticationForm()
+	render(request, 'players/login.html', {"form": form})
+
+
+
 
 # def profile(request):
 
