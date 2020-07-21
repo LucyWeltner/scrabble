@@ -16,6 +16,7 @@ def game_view(request):
 			player1 = form.cleaned_data.get("players")
 			newgame = Game.objects.create(name=name)
 			newgame.players.add(player1[0])
+			newgame.players.add(request.user.player)
 	return render(request, 'games/index.html', {"today": today, "games": games})
 
 def new_game_view(request):
@@ -41,8 +42,7 @@ def players_view(request):
 			password = data.cleaned_data.get("password")
 			user = User.objects.create_user(name, email, password)
 			player = Player.objects.create(user_id=user.id)
-			return HttpResponse("<p>Player Successfully Created</p>")
-		# return HttpResponseRedirect('/profile/')
+			return HttpResponseRedirect('/profile/')
 		else:
 			return HttpResponse("<p>There was an error, please try again</p>")
 
@@ -72,7 +72,8 @@ def profile_view(request):
 	user = request.user
 	print(user.email)
 	if user.is_authenticated:
-		return render(request, 'players/profile.html', {"user": user})
+		player = request.user.player
+		return render(request, 'players/profile.html', {"user": user, "player": player})
 	else:
 		return HttpResponse("<p>You are not logged in</p>")
 

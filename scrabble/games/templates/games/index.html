@@ -13,7 +13,7 @@
 				</li>
 				<ul>
 					{%for player in game.players.all%}
-						<li>{{player.name}}</li>
+						<li>{{player.user.username}}</li>
 					{%endfor%}
 				</ul>
 			{% endfor %}

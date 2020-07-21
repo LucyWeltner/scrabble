@@ -19,7 +19,7 @@ class Player(models.Model):
 	games = models.ManyToManyField(Game, through="PlayerInGame")
 
 	def __str__(self):
-		return self.name
+		return self.user.username
 
 class PlayerInGame(models.Model):
 	game = models.ForeignKey(Game, on_delete=models.CASCADE)
